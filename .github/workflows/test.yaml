@@ -1,5 +1,5 @@
 ---
-name: "ops: check and build"
+name: "test action"
 on:
   push:
   pull_request:
@@ -18,7 +18,7 @@ jobs:
 
     - name: Verify vesion
       run: |
-        echo ${{ steps.install-nhost-cli.outputs.version.value }}
+        echo ${{ steps.install-nhost-cli.outputs.version }}
         nhost --version
       shell: bash
 
