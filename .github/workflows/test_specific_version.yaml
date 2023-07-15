@@ -15,13 +15,14 @@ jobs:
     - name: Install Nhost CLI
       id: install-nhost-cli
       uses: ./
+      with:
+        version: 1.2.0
 
     - name: Verify version
       run: |
-        expected="${{ steps.install-nhost-cli.outputs.version }}"
-        got=$(nhost --version | awk -F '{print $3}')
-        if [ "$got" != "$expected" ]; then
-          echo "Versions do not match: got=$got, expected=$expected"
+        installed_version=$(nhost --version | awk '{ print $3 }')
+        if [ "$actual_version" != "1.2.0" ]; then
+          echo "Versions do not match: installed_version=$installed_version, expected=1.2.0"
           exit 1
         fi
       shell: bash
