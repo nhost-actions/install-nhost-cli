@@ -1,5 +1,5 @@
 ---
-name: "test action"
+name: "test action: install specific version"
 on:
   push:
   pull_request:
