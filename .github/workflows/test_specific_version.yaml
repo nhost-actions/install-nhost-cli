@@ -1,0 +1,28 @@
+---
+name: "test action: install specific version"
+on:
+  push:
+  pull_request:
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: "Check out repository"
+      uses: actions/checkout@v3
+
+    - name: Install Nhost CLI
+      id: install-nhost-cli
+      uses: ./
+      with:
+        version: v1.2.0
+
+    - name: Verify version
+      run: |
+        got=$(nhost --version | awk '{ print $3 }')
+        if [ "$got" != "v1.2.0" ]; then
+          echo "Versions do not match: got=$got, expected=v1.2.0"
+          exit 1
+        fi
+      shell: bash

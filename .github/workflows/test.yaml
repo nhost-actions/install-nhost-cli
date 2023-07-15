@@ -1,0 +1,27 @@
+---
+name: "test action"
+on:
+  push:
+  pull_request:
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: "Check out repository"
+      uses: actions/checkout@v3
+
+    - name: Install Nhost CLI
+      id: install-nhost-cli
+      uses: ./
+
+    - name: Verify version
+      run: |
+        expected="${{ steps.install-nhost-cli.outputs.version }}"
+        got=$(nhost --version | awk '{ print $3 }')
+        if [ "$got" != "$expected" ]; then
+          echo "Versions do not match: got=$got, expected=$expected"
+          exit 1
+        fi
+      shell: bash
