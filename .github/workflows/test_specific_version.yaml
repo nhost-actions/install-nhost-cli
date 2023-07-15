@@ -16,12 +16,12 @@ jobs:
       id: install-nhost-cli
       uses: ./
       with:
-        version: 1.2.0
+        version: v1.2.0
 
     - name: Verify version
       run: |
         installed_version=$(nhost --version | awk '{ print $3 }')
-        if [ "$actual_version" != "1.2.0" ]; then
+        if [ "$actual_version" != "v1.2.0" ]; then
           echo "Versions do not match: installed_version=$installed_version, expected=1.2.0"
           exit 1
         fi
