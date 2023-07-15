@@ -1,0 +1,24 @@
+---
+name: "ops: check and build"
+on:
+  push:
+  pull_request:
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: "Check out repository"
+      uses: actions/checkout@v3
+
+    - name: Install Nhost CLI
+      id: install-nhost-cli
+      uses: ./
+
+    - name: Verify vesion
+      run: |
+        echo ${{ steps.install-nhost-cli.outputs.version.value }}
+        nhost --version
+      shell: bash
+

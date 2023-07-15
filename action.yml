@@ -1,0 +1,20 @@
+name: 'Install Nhost CLI'
+description: 'Installs Nhost CLI'
+inputs:
+  version:
+    description: "Version of the CLI to install. Defaults to latest available."
+    required: false
+outputs:
+  version:
+    description: "Version installed"
+    value: ${{ steps.version.outputs.version }}
+runs:
+  using: "composite"
+  steps:
+    - run: |
+        sudo curl -L https://raw.githubusercontent.com/nhost/cli/main/get.sh ${{ inputs.version }} | bash
+      shell: bash
+    - id: version
+      run: |
+        echo "version=$(nhost --version | awk '{ print $3 }')" >> $GITHUB_OUTPUT
+      shell: bash
